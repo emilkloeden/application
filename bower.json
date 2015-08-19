@@ -1,0 +1,28 @@
+{
+  "name": "ABW",
+  "version": "0.0.0",
+  "authors": [
+    "Emil Kloeden <emilkloeden@gmail.com>"
+  ],
+  "description": "Tester app for next-stage ABW",
+  "main": "./bin/www",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "keywords": [
+    "ABW"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libraries/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.5"
+  }
+}
