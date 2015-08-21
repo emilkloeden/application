@@ -1,6 +1,6 @@
 module.exports = [
     {
-        courseCode: '3CM011',
+        code: '12345',
         name: 'Master of English',
         keywords: [
             'English', 
@@ -9,7 +9,7 @@ module.exports = [
         institution: 'The University of Adelaide'
     },
     {
-        courseCode: '3CM015',
+        code: 'Ab34',
         name: 'Master of French',
         keywords: [
             'French', 
@@ -18,7 +18,7 @@ module.exports = [
         institution: 'The University of Adelaide'
     },
     {
-        courseCode: '2CM015',
+        code: 'fd356',
         name: 'Master of French',
         keywords: [
             'French', 
@@ -27,7 +27,7 @@ module.exports = [
         institution: 'Flinders University'
     },
     {
-        courseCode: '214111',
+        code: 'sgdg23',
         name: 'Bachelor of Mathematics',
         keywords: [
             'French', 
@@ -36,7 +36,7 @@ module.exports = [
         institution: 'Flinders University'
     },
     {
-        courseCode: '114999',
+        code: '243fsd',
         name: 'Bachelor of Statistics',
         keywords: [
             'French', 

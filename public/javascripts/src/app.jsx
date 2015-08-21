@@ -7,11 +7,11 @@ var Route = Router.Route;
 
 var Home = require('./components/Home.jsx');
 var MyStudiesPage = require('./components/MyStudiesPage.jsx');
-var MyCoursesPage = require('./components/MyCoursesPage.jsx');
+//var MyCoursesPage = require('./components/MyCoursesPage.jsx');
 var MyExperiencePage = require('./components/MyExperiencePage.jsx');
 var MyApplicationsPage = require('./components/MyApplicationsPage.jsx');
 var AppNavBar = require('./components/AppNavBar.jsx');
-//var MyStudiesPage = require('./components/MyStudiesPage.jsx');
+var MyStudiesPage = require('./components/MyStudiesPage.jsx');
 
 
 
@@ -20,7 +20,7 @@ var routes = (
     <DefaultRoute handler={Home} />
         <Route path="/" name="home" handler={Home} />
         <Route path="/studies" name="studies" handler={MyStudiesPage} />
-        <Route name="courses" handler={MyCoursesPage} />
+        
         <Route name="experience" handler={MyExperiencePage} />
         <Route path="application/:cycle" name="application" handler={MyApplicationsPage} />
     </Route>
@@ -37,3 +37,5 @@ var App = React.createClass({
 Router.run(routes, Router.HashLocation, function (Root) {
     return(React.render(<Root />, document.getElementById('content')))
 });
+
+// <Route name="courses" handler={MyCoursesPage} /> # after MyStudiesPage

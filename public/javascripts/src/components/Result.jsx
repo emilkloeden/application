@@ -1,31 +1,38 @@
-var React = require('react');
-var ViewActions = require('../actions/ViewActions.js');
+import React from 'react';
+import { Button, ButtonToolbar } from 'react-bootstrap';
+import ViewActions from '../actions/ViewActions.js';
+import AddButton from './AddButton.jsx';
+import AddStudiesModal from './AddStudiesModal.jsx';
 
-var Result = React.createClass({
+export default React.createClass({
     
-    render: function() {
-        var noDocs;
-        console.log('result props')
-        console.log(this.props)
+    render() {
+        var noDocs,
+            docsText,
+            addResult;
+
         var institution = this.props.institution;
 
-        console.log('institution')
-        console.log(institution)
         if (institution.onARTS==="Y" || institution.onArchives==="Y") {
-            noDocs = <span><small><em>Documents not required</em></small></span>
+            noDocs = true;
+        }
+        if (noDocs) {
+            docsText = <span><small><em>Documents not required</em></small></span>
+            addResult = <AddButton institution={institution} />
+        } 
+        else {
+            addResult = <AddStudiesModal institution={institution} />
         }
 
         return (
             <div className="list-group-item">
                 <h4 className="list-group-item-heading">
                     <span><p>{institution.name}</p></span>
-                    {noDocs}
+                    {docsText}
                     <small>{institution.parentOrganisation}</small>
                     <small>{institution.country}</small>
                     <span className="pull-right">
-                        <small>
-                            <a href="#/studies" onClick={this._onAddClick}>Add</a>
-                        </small>
+                     {addResult}
                     </span>
                 </h4>
             </div>
@@ -36,5 +43,3 @@ var Result = React.createClass({
         ViewActions.addStudy(this.props.institution);
     }
 });
-
-module.exports = Result;

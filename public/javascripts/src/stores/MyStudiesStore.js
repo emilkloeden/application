@@ -8,14 +8,13 @@ var CHANGE_EVENT = 'change';
 
 
 
-var _myStudies = API.getStorage('myStudies') || [];
+var _myStudies = API.getStorage('studies') || [];
 
 
 
 
-function editStudy(id) {
-    console.log(_myStudies);
-    console.log('Edit functionality to come...');
+function editStudy(institution) {
+    this.setState({showModal: true});
 }
 
 function addStudy(institution) {
@@ -26,11 +25,9 @@ function addStudy(institution) {
    }
 }
 
-function removeStudy(id) {
-    var index = API.arrayObjectIndexOf(_myStudies, id.id, 'id');
-    console.log('index: ' + index.toString())
+function removeStudy(institution) {
+    var index = API.arrayObjectIndexOf(_myStudies, institution.id, 'id');
     if (index != -1) {
-       console.log(_myStudies[index].toString() + 'to be deleted')
        _myStudies.splice([index],1);
        API.updateStorage('studies', _myStudies);
    }
@@ -65,12 +62,12 @@ var MyStudiesStore = assign({}, EventEmitter.prototype, {
                 break;
             
             case ViewConstants.EDIT_STUDY:
-                edit(action.id);
+                edit(action.institution);
                 MyStudiesStore.emitChange();
                 break;
             
             case ViewConstants.REMOVE_STUDY:
-                removeStudy(action.id);
+                removeStudy(action.institution);
                 MyStudiesStore.emitChange();
                 break;
         }

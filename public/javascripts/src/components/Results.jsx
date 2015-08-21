@@ -4,8 +4,6 @@ var Result = require('./Result.jsx');
 var Results = React.createClass({
     
     render: function() {
-        console.log('results props')
-        console.log(this.props);
         var matches = [];
 
         if(this.props.filterText.length > 0) {
@@ -13,7 +11,7 @@ var Results = React.createClass({
             this.props.institutions.forEach(function(institution) {
                 if (institution.name.toLowerCase().indexOf(this.props.filterText) !== -1) {
                     matches.push(
-                        <Result institution={institution} />
+                        <Result institution={institution} key={institution.id}/>
                     );
                 }
             }.bind(this));

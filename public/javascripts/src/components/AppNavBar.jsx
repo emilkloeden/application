@@ -1,16 +1,12 @@
-var React = require('react');
-var Link = require('react-router').Link;
-
-var Nav             = require('react-bootstrap').Nav;
-var Navbar          = require('react-bootstrap').Navbar;
-var NavItem         = require('react-bootstrap').NavItem;
-var DropdownButton  = require('react-bootstrap').DropdownButton;
-var MenuItem        = require('react-bootstrap').MenuItem;
-var CollapsibleNav  = require('react-bootstrap').CollapsibleNav;
+import React from 'react';
+import { Link } from 'react-router';
+import { Nav, Navbar, DropdownButton} from 'react-bootstrap';
+import { NavItemLink, MenuItemLink } from 'react-router-bootstrap';
 
 
-var AppNavBar = React.createClass({
-    render: function() {
+
+export default React.createClass({
+    render() {
     var user = "Emil"; //getting this from state or props would be cool!
         return (
             
@@ -23,34 +19,31 @@ var AppNavBar = React.createClass({
                 
             >
                 <Nav navbar eventKey={0}>
-                    <NavItem eventKey={1}>
-                        <Link to="home">Dashboard</Link>
-                    </NavItem>
-                    <NavItem eventKey={2}>
-                        <Link to="studies">My Studies</Link>
-                    </NavItem>
-                    <NavItem eventKey={3}>
-                        <Link to="experience">My Experience</Link>
-                    </NavItem>
-                    <NavItem eventKey={4}>
-                        <Link to="courses">My Course Choices</Link>
-                    </NavItem>
+                    <NavItemLink eventKey={1} to="home">Dashboard</NavItemLink>
+                    <NavItemLink eventKey={2} to="studies">My Studies</NavItemLink>
+                    <NavItemLink eventKey={3} to="experience">My Experience</NavItemLink>
                     <DropdownButton eventKey={5} title='My Applications'>
-                        <MenuItem eventKey='1'>
-                            <Link to="application" params={{cycle: "Undergraduate 2016"}}>
+                        <MenuItemLink 
+                            eventKey='1' 
+                            to="application" 
+                            params={{cycle: "Undergraduate 2016"}}
+                        >
                                 Undergraduate 2016
-                            </Link>
-                        </MenuItem>
-                        <MenuItem eventKey='2'>
-                            <Link to="application" params={{cycle: "Postgraduate 2016"}}>
+                        </MenuItemLink>
+                        <MenuItemLink 
+                            eventKey='2'
+                            to="application" 
+                            params={{cycle: "Postgraduate 2016"}}
+                        >
                                 Postgraduate 2016
-                            </Link>
-                        </MenuItem>
-                        <MenuItem eventKey='3'>
-                            <Link to="application" params={{cycle: "TAFE 2016"}}>
+                        </MenuItemLink>
+                        <MenuItemLink 
+                            eventKey='3' 
+                            to="application" 
+                            params={{cycle: "TAFE 2016"}}
+                        >
                                 TAFE 2016
-                            </Link>
-                        </MenuItem>
+                        </MenuItemLink>
                     </DropdownButton>
                 </Nav>
             </Navbar>
@@ -58,4 +51,10 @@ var AppNavBar = React.createClass({
     }
 });
 
-module.exports = AppNavBar;
+
+/*
+
+
+                    <NavItem eventKey={4}>
+                        <Link to="courses">My Course Choices</Link>
+                    </NavItem> */

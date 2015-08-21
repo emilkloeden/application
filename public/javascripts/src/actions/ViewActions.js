@@ -15,20 +15,20 @@ var ViewActions = {
     /**
     *@param string id - id of institution in MyStudies to remove
     */
-    editStudy: function(id) {
+    editStudy: function(institution) {
         AppDispatcher.handleViewAction({
             actionType: ViewConstants.EDIT_STUDY,
-            id: id
+            institution: institution
         })
     },
 
     /**
-    *@param string id - id of institution in MyStudies to remove
+    *@param string institution - institution of institution in MyStudies to remove
     */
-    removeStudy: function(id) {
+    removeStudy: function(institution) {
         AppDispatcher.handleViewAction({
             actionType: ViewConstants.REMOVE_STUDY,
-            id: id
+            institution: institution
         })
     }
 }

@@ -1,9 +1,11 @@
-var React = require('react');
+import React from 'react';
+import { ListGroup } from 'react-bootstrap'
+
 var MyStudiesStore = require('../stores/MyStudiesStore.js');
 var MyStudy = require('./MyStudy.jsx');
 
 
-var MyStudies = React.createClass({
+export default React.createClass({
 
     getInitialState: function() {
         return this._getAll();
@@ -28,7 +30,7 @@ var MyStudies = React.createClass({
         return(
             <div>
                 <h3>My Studies</h3>
-                <div className="list-group">
+                <ListGroup>
                     {
                         studies.map(function(institution) {
                             console.log('institution: ' + institution.toString())
@@ -36,7 +38,7 @@ var MyStudies = React.createClass({
                         }
                     )}
                     
-                </div>
+                </ListGroup>
             </div>
             )
         
@@ -51,5 +53,4 @@ var MyStudies = React.createClass({
     }
 });
 
-module.exports = MyStudies;
 

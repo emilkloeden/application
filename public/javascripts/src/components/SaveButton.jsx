@@ -1,11 +1,9 @@
-var React = require('react');
-var Bootstrap = require('react-bootstrap');
+import React from 'react';
+import {ButtonToolbar, Button} from 'react-bootstrap'
 
-var ButtonToolbar = Bootstrap.ButtonToolbar;
-var Button = Bootstrap.Button;
 
-var buttonsInstance = React.createClass({
-    render: function() {
+export default React.createClass({
+    render() {
         return (
             <ButtonToolbar>
                 <Button bsStyle='primary' >Save</Button>
@@ -13,5 +11,3 @@ var buttonsInstance = React.createClass({
         )
     }
 })
-
-module.exports = buttonsInstance;
