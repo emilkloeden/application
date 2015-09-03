@@ -1,7 +1,7 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var ViewConstants = require('../constants/ViewConstants.js');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import ViewConstants from '../constants/ViewConstants.js';
 
-var ViewActions = {
+let ViewActions = {
     /**
     *@param {object} institution - from one list to another
     */
@@ -33,4 +33,4 @@ var ViewActions = {
     }
 }
 
-module.exports = ViewActions
+export default ViewActions;

@@ -1,45 +1,51 @@
-var React = require('react');
-var BootStrap = require('react-bootstrap');
+import React from 'react';
+import BootStrap from 'react-bootstrap';
 
-var StudiesSearch = require('./StudiesSearch.jsx');
-var MyStudies = require('./MyStudies.jsx');
-var SaveButton = require('./SaveButton.jsx');
-var MyStudiesStore = require('../stores/MyStudiesStore.js');
-var AppNavBar = require('./AppNavBar.jsx');
+import StudiesSearch from './StudiesSearch.jsx';
+import MyStudies from './MyStudies.jsx';
+import SaveButton from './SaveButton.jsx';
+import AppStore from '../stores/AppStore.js';
+import AppNavBar from './AppNavBar.jsx';
+
+import API from '../stores/API.js'
+import institutions from '../../../data/sources.js';
 
 
-var institutions = require('../../../data/sources.js');
-console.log('institutions');
-console.log(institutions)
+// console.log('institutions');
+// console.log(institutions)
 
-function getMyStudiesState() {
-    return {studies: MyStudiesStore.getAll()};
-}
+// function getMyStudiesState() {
+//     return {studies: MyStudiesStore.getAll()};
+// }
 
 var MyStudiesPage = React.createClass({
-    getInitialState: function() {
-        return getMyStudiesState();
+    getInitialState() {
+        let applicationState = API.getApplicationState();
+        applicationState.studies = institutions;
+        return applicationState;
     },
     
-    componentDidMount: function() {
-        MyStudiesStore.addChangeListener(this._onChange);
+    componentDidMount() {
+        AppStore.addChangeListener(this._onChange);
     },
     
-    componentWillUnmount: function() {
-        MyStudiesStore.removeChangeListener(this._onChange);
+    componentWillUnmount() {
+        AppStore.removeChangeListener(this._onChange);
     },
     
-    render: function() {
+    render() {
+        console.log('MyStudiesPage state');
+        console.log(this.state);
         return (
             <div>
             <AppNavBar />
                 <div className="container-fluid">
                     
                     <div className="col-md-8 col-xs-12">
-                        <StudiesSearch institutions={institutions} />
+                        <StudiesSearch institutions={institutions} applicationState={this.state.applicationState} />
                     </div>
                     <div className="col-md-4 col-xs-12">
-                        <MyStudies  />
+                        <MyStudies applicationState={this.state.applicationState} />
                     </div>
                     <div className="col-md-4 col-xs-12">
                         <SaveButton />
@@ -50,9 +56,9 @@ var MyStudiesPage = React.createClass({
     },
 
     _onChange: function() {
-        this.setState(getMyStudiesState());
+        this.setState(API.getApplicationState());
     }
 });
 
 
-module.exports = MyStudiesPage;
+export default MyStudiesPage;

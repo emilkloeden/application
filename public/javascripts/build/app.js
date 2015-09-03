@@ -34569,6 +34569,30 @@ module.exports = require('./lib/React');
 },{"./lib/React":224}],352:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+exports['default'] = [{
+    id: 1,
+    country: 'China',
+    level: 'Shway She Shway Something',
+    NOOSR: ['HES1-4', 'HES2-1'],
+    NARIC: ['Bachelor Degree']
+}, {
+    id: 2,
+    country: 'China',
+    level: 'Blah',
+    NOOSR: ['HES1-5', 'HES2-2'],
+    NARIC: ['Associate Degree']
+}, {
+    id: 3,
+    level: 'Diploma'
+}];
+module.exports = exports['default'];
+
+},{}],353:[function(require,module,exports){
+'use strict';
+
 module.exports = [{
     id: 0,
     name: 'The University of Adelaide',
@@ -34592,19 +34616,30 @@ module.exports = [{
     NOOSRAssessment: 'HES1'
 }];
 
-},{}],353:[function(require,module,exports){
+},{}],354:[function(require,module,exports){
 'use strict';
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var ViewConstants = require('../constants/ViewConstants.js');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _dispatcherAppDispatcher = require('../dispatcher/AppDispatcher');
+
+var _dispatcherAppDispatcher2 = _interopRequireDefault(_dispatcherAppDispatcher);
+
+var _constantsViewConstantsJs = require('../constants/ViewConstants.js');
+
+var _constantsViewConstantsJs2 = _interopRequireDefault(_constantsViewConstantsJs);
 
 var ViewActions = {
     /**
     *@param {object} institution - from one list to another
     */
     addStudy: function addStudy(institution) {
-        AppDispatcher.handleViewAction({
-            actionType: ViewConstants.ADD_STUDY,
+        _dispatcherAppDispatcher2['default'].handleViewAction({
+            actionType: _constantsViewConstantsJs2['default'].ADD_STUDY,
             institution: institution
         });
     },
@@ -34613,8 +34648,8 @@ var ViewActions = {
     *@param string id - id of institution in MyStudies to remove
     */
     editStudy: function editStudy(institution) {
-        AppDispatcher.handleViewAction({
-            actionType: ViewConstants.EDIT_STUDY,
+        _dispatcherAppDispatcher2['default'].handleViewAction({
+            actionType: _constantsViewConstantsJs2['default'].EDIT_STUDY,
             institution: institution
         });
     },
@@ -34623,17 +34658,24 @@ var ViewActions = {
     *@param string institution - institution of institution in MyStudies to remove
     */
     removeStudy: function removeStudy(institution) {
-        AppDispatcher.handleViewAction({
-            actionType: ViewConstants.REMOVE_STUDY,
+        _dispatcherAppDispatcher2['default'].handleViewAction({
+            actionType: _constantsViewConstantsJs2['default'].REMOVE_STUDY,
             institution: institution
         });
     }
 };
 
-module.exports = ViewActions;
+exports['default'] = ViewActions;
+module.exports = exports['default'];
 
-},{"../constants/ViewConstants.js":370,"../dispatcher/AppDispatcher":371}],354:[function(require,module,exports){
+},{"../constants/ViewConstants.js":374,"../dispatcher/AppDispatcher":375}],355:[function(require,module,exports){
 'use strict';
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _storesAPIJs = require('./stores/API.js');
+
+var _storesAPIJs2 = _interopRequireDefault(_storesAPIJs);
 
 var React = require('react');
 var Router = require('react-router');
@@ -34662,6 +34704,12 @@ var routes = React.createElement(
 var App = React.createClass({
     displayName: 'App',
 
+    getInitialState: function getInitialState() {
+        _storesAPIJs2['default'].getApplicationState();
+    },
+    componentWillMount: function componentWillMount() {
+        _storesAPIJs2['default'].getApplicationState();
+    },
     render: function render() {
         return React.createElement(RouteHandler, null);
     }
@@ -34673,7 +34721,7 @@ Router.run(routes, Router.HashLocation, function (Root) {
 
 // <Route name="courses" handler={MyCoursesPage} /> # after MyStudiesPage
 
-},{"./components/AppNavBar.jsx":357,"./components/Home.jsx":359,"./components/MyApplicationsPage.jsx":360,"./components/MyExperiencePage.jsx":361,"./components/MyStudiesPage.jsx":363,"react":351,"react-router":182}],355:[function(require,module,exports){
+},{"./components/AppNavBar.jsx":359,"./components/Home.jsx":361,"./components/MyApplicationsPage.jsx":363,"./components/MyExperiencePage.jsx":364,"./components/MyStudiesPage.jsx":366,"./stores/API.js":376,"react":351,"react-router":182}],356:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -34696,6 +34744,7 @@ exports['default'] = _react2['default'].createClass({
     displayName: 'AddButton',
 
     _onAddClick: function _onAddClick() {
+        console.log('Add button clicked');
         _actionsViewActionsJs2['default'].addStudy(this.props.institution);
     },
 
@@ -34708,16 +34757,23 @@ exports['default'] = _react2['default'].createClass({
                 null,
                 _react2['default'].createElement(
                     _reactBootstrap.Button,
-                    { bsStyle: 'primary', bsSize: 'xsmall', onClick: this._onAddClick },
+                    {
+                        bsStyle: 'primary',
+                        bsSize: 'xsmall',
+                        onClick: this._onAddClick,
+                        institution: this.props.institution
+                    },
                     'Add'
                 )
             )
         );
     }
 });
+
+//institution or this.props.institution
 module.exports = exports['default'];
 
-},{"../actions/ViewActions.js":353,"react":351,"react-bootstrap":74}],356:[function(require,module,exports){
+},{"../actions/ViewActions.js":354,"react":351,"react-bootstrap":74}],357:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -34735,6 +34791,10 @@ var _reactBootstrap = require('react-bootstrap');
 var _actionsViewActionsJs = require('../actions/ViewActions.js');
 
 var _actionsViewActionsJs2 = _interopRequireDefault(_actionsViewActionsJs);
+
+var _AddStudiesModalBodyJsx = require('./AddStudiesModalBody.jsx');
+
+var _AddStudiesModalBodyJsx2 = _interopRequireDefault(_AddStudiesModalBodyJsx);
 
 exports['default'] = _react2['default'].createClass({
     displayName: 'AddStudiesModal',
@@ -34759,20 +34819,27 @@ exports['default'] = _react2['default'].createClass({
         this.setState({ 'institutionQuals': institutionQuals });
     },
 
-    handleLevel: function handleLevel() {
-        console.log('handle level');
-    },
-
     getInstitutionQuals: function getInstitutionQuals() {
         return this.state.institutionQuals || [];
     },
 
     addQualifications: function addQualifications() {
-        _actionsViewActionsJs2['default'].addStudy(this.props.institution);
+        var institution = this.props.institution;
+        var quals = JSON.parse(window.localStorage.getItem('tempStorage'));
+        console.log('quals gotten');
+        console.log(quals);
+        console.log('removing temporary storage...');
+        window.localStorage.removeItem('tempStorage');
+        institution['quals'] = quals;
+        console.log('add quals institution');
+        console.log(institution);
+        _actionsViewActionsJs2['default'].addStudy(institution);
         this.close();
     },
 
     render: function render() {
+        console.log('modal initial props');
+        console.log(this.props);
         return _react2['default'].createElement(
             'div',
             null,
@@ -34787,69 +34854,210 @@ exports['default'] = _react2['default'].createClass({
             ),
             _react2['default'].createElement(
                 _reactBootstrap.Modal,
-                { show: this.state.showModal, onHide: this.close },
+                { show: this.state.showModal, onHide: this.close, institution: this.props.institution },
                 _react2['default'].createElement(
-                    _reactBootstrap.Modal.Header,
-                    { closeButton: true },
+                    'form',
+                    { className: 'form-group' },
                     _react2['default'].createElement(
-                        _reactBootstrap.Modal.Title,
-                        null,
-                        'Add qualifications... click Add qualification(s) when done'
-                    )
-                ),
-                _react2['default'].createElement(
-                    _reactBootstrap.Modal.Body,
-                    null,
-                    _react2['default'].createElement(
-                        'h2',
-                        null,
-                        'What level did you study?'
-                    ),
-                    _react2['default'].createElement(
-                        _reactBootstrap.Input,
-                        { type: 'select', ref: 'level', onChange: this.handleLevel },
+                        _reactBootstrap.Modal.Header,
+                        { closeButton: true },
                         _react2['default'].createElement(
-                            'option',
-                            { value: 'a' },
-                            'a'
-                        ),
-                        _react2['default'].createElement(
-                            'option',
-                            { value: 'b' },
-                            'b'
+                            _reactBootstrap.Modal.Title,
+                            null,
+                            'Add qualifications... click Add qualification(s) when done'
                         )
                     ),
                     _react2['default'].createElement(
-                        _reactBootstrap.ButtonToolbar,
+                        _reactBootstrap.Modal.Body,
+                        { institution: this.props.institution },
+                        _react2['default'].createElement(_AddStudiesModalBodyJsx2['default'], { institution: this.props.institution })
+                    ),
+                    _react2['default'].createElement(
+                        _reactBootstrap.Modal.Footer,
                         null,
                         _react2['default'].createElement(
                             _reactBootstrap.Button,
-                            { onClick: this.addSingleQual },
-                            'Add'
+                            { bsStyle: 'primary', onClick: this.addQualifications },
+                            'DONE'
                         )
-                    ),
-                    _react2['default'].createElement(
-                        'p',
-                        null,
-                        'Dummy text for now...'
-                    )
-                ),
-                _react2['default'].createElement(
-                    _reactBootstrap.Modal.Footer,
-                    null,
-                    _react2['default'].createElement(
-                        _reactBootstrap.Button,
-                        { onClick: this.addQualifications },
-                        'Add qualification(s)...'
                     )
                 )
             )
         );
     }
 });
+
+//
+//<Modal.Body />
 module.exports = exports['default'];
 
-},{"../actions/ViewActions.js":353,"react":351,"react-bootstrap":74}],357:[function(require,module,exports){
+},{"../actions/ViewActions.js":354,"./AddStudiesModalBody.jsx":358,"react":351,"react-bootstrap":74}],358:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _actionsViewActionsJs = require('../actions/ViewActions.js');
+
+var _actionsViewActionsJs2 = _interopRequireDefault(_actionsViewActionsJs);
+
+var _YearInputJsx = require('./YearInput.jsx');
+
+var _YearInputJsx2 = _interopRequireDefault(_YearInputJsx);
+
+var _LevelInputJsx = require('./LevelInput.jsx');
+
+var _LevelInputJsx2 = _interopRequireDefault(_LevelInputJsx);
+
+exports['default'] = _react2['default'].createClass({
+    displayName: 'AddStudiesModalBody',
+
+    getInitialState: function getInitialState() {
+        return {
+            quals: [] //new Set()
+        };
+    },
+
+    addSingleQual: function addSingleQual() {
+        console.log('add single qual clicked');
+        console.log(this);
+        console.log(this.state);
+        var quals = this.state.quals;
+        var ref = this.refs;
+        if (!(ref.level.state.value && ref.name.getValue() && ref.start.state.value && ref.end.state.value)) {
+            console.log('Need some values to add a qual');
+        } else {
+            quals.push({
+                level: this.refs.level.state.value,
+                name: this.refs.name.getValue(),
+                start: this.refs.start.state.value,
+                end: this.refs.end.state.value,
+                awarded: this.refs.awarded.getChecked()
+            });
+            this.setState({ quals: quals });
+            window.localStorage.setItem('tempStorage', JSON.stringify(this.state.quals));
+            console.log(this.state);
+        }
+    },
+
+    render: function render() {
+        var quals = this.state.quals;
+        console.log('render');
+        console.log(studies);
+        var studies = quals.map(function (a) {
+            return _react2['default'].createElement(
+                _reactBootstrap.ListGroupItem,
+                {
+                    key: a.id,
+                    bsSize: 'xsmall'
+                },
+                _react2['default'].createElement(
+                    'p',
+                    null,
+                    a.name
+                ),
+                _react2['default'].createElement(
+                    'p',
+                    null,
+                    a.start,
+                    ' - ',
+                    a.end
+                ),
+                _react2['default'].createElement(
+                    'p',
+                    null,
+                    a.awarded
+                )
+            );
+        });
+
+        return _react2['default'].createElement(
+            'div',
+            null,
+            _react2['default'].createElement(_LevelInputJsx2['default'], {
+                institution: this.props.institution,
+                label: 'What level did you study?',
+                ref: 'level'
+            }),
+            _react2['default'].createElement(_reactBootstrap.Input, {
+                label: 'What was the qualification called?',
+                ref: 'name',
+                type: 'text'
+            }),
+            _react2['default'].createElement(_YearInputJsx2['default'], {
+                institution: this.props.institution,
+                label: 'When did you start?',
+                placeholder: 2000,
+                refName: 'start',
+                ref: 'start'
+            }),
+            _react2['default'].createElement(_YearInputJsx2['default'], {
+                institution: this.props.institution,
+                label: 'When did you finish?',
+                placeholder: 2000,
+                refName: 'end',
+                ref: 'end'
+            }),
+            _react2['default'].createElement(_reactBootstrap.Input, {
+                label: 'Awarded?',
+                type: 'checkbox',
+                ref: 'awarded'
+            }),
+            _react2['default'].createElement(
+                _reactBootstrap.ButtonToolbar,
+                null,
+                _react2['default'].createElement(
+                    _reactBootstrap.Button,
+                    { bsStyle: 'primary', onClick: this.addSingleQual },
+                    'Add Qualification'
+                )
+            ),
+            _react2['default'].createElement(
+                'h4',
+                null,
+                'Qualifications studied at ' + this.props.institution.name
+            ),
+            _react2['default'].createElement(
+                'div',
+                { className: 'col-xs-12 col-md-12' },
+                studies
+            )
+        );
+    }
+});
+
+/*
+
+<ListGroup>
+                        {studies}
+                    </ListGroup>
+<div className="form-control">
+                </div>
+
+
+<YearInput 
+                    institution={this.props.institution} 
+                    label="When did you stop?"
+                    placeholder={2003}
+                    refName="End"
+                />
+
+<YearInput label="Year started" />
+                    <YearInput label="Year started" />
+
+*/
+module.exports = exports['default'];
+
+},{"../actions/ViewActions.js":354,"./LevelInput.jsx":362,"./YearInput.jsx":373,"react":351,"react-bootstrap":74}],359:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -34945,7 +35153,7 @@ exports['default'] = _react2['default'].createClass({
                     </NavItem> */
 module.exports = exports['default'];
 
-},{"react":351,"react-bootstrap":74,"react-router":182,"react-router-bootstrap":157}],358:[function(require,module,exports){
+},{"react":351,"react-bootstrap":74,"react-router":182,"react-router-bootstrap":157}],360:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -35043,7 +35251,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../actions/ViewActions.js":353,"react":351,"react-bootstrap":74}],359:[function(require,module,exports){
+},{"../actions/ViewActions.js":354,"react":351,"react-bootstrap":74}],361:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -35068,7 +35276,84 @@ var Home = React.createClass({
 
 module.exports = Home;
 
-},{"./AppNavBar.jsx":357,"react":351}],360:[function(require,module,exports){
+},{"./AppNavBar.jsx":359,"react":351}],362:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _actionsViewActionsJs = require('../actions/ViewActions.js');
+
+var _actionsViewActionsJs2 = _interopRequireDefault(_actionsViewActionsJs);
+
+var _dataCountryLevelsJs = require('../../../data/CountryLevels.js');
+
+var _dataCountryLevelsJs2 = _interopRequireDefault(_dataCountryLevelsJs);
+
+exports['default'] = _react2['default'].createClass({
+    displayName: 'LevelInput',
+
+    getInitialState: function getInitialState() {
+        return {
+            value: "select..."
+        };
+    },
+
+    render: function render() {
+        var _this = this;
+
+        var levels;
+
+        if (this.props.institution.country) {
+            levels = _dataCountryLevelsJs2['default'].filter(function (a) {
+                return a.country === _this.props.institution.country;
+            });
+        } else {
+            levels = _dataCountryLevelsJs2['default'].filter(function (a) {
+                return !a.country;
+            });
+        }
+        var options = levels.map(function (a) {
+            return _react2['default'].createElement(
+                'option',
+                { key: a.id, value: a.level },
+                a.level
+            );
+        });
+        console.log('levels');
+        console.log(levels);
+        return _react2['default'].createElement(
+            _reactBootstrap.Input,
+            {
+                type: 'select',
+                ref: 'levelSelect',
+                placeholder: 'select',
+                onChange: this.handleLevel,
+                label: this.props.label
+            },
+            options
+        );
+    },
+
+    handleLevel: function handleLevel() {
+        console.log('handle level');
+        this.setState({ value: this.refs.levelSelect.getValue() });
+        console.log(this.state);
+        console.log(this.refs);
+    }
+});
+module.exports = exports['default'];
+
+},{"../../../data/CountryLevels.js":352,"../actions/ViewActions.js":354,"react":351,"react-bootstrap":74}],363:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -35096,7 +35381,7 @@ var MyApplicationsPage = React.createClass({
 
 module.exports = MyApplicationsPage;
 
-},{"./AppNavBar.jsx":357,"react":351}],361:[function(require,module,exports){
+},{"./AppNavBar.jsx":359,"react":351}],364:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -35121,7 +35406,7 @@ var MyExperiencePage = React.createClass({
 
 module.exports = MyExperiencePage;
 
-},{"./AppNavBar.jsx":357,"react":351}],362:[function(require,module,exports){
+},{"./AppNavBar.jsx":359,"react":351}],365:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -35136,31 +35421,24 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = require('react-bootstrap');
 
-var MyStudiesStore = require('../stores/MyStudiesStore.js');
-var MyStudy = require('./MyStudy.jsx');
+var _storesAppStoreJs = require('../stores/AppStore.js');
+
+var _storesAppStoreJs2 = _interopRequireDefault(_storesAppStoreJs);
+
+var _MyStudyJsx = require('./MyStudy.jsx');
+
+var _MyStudyJsx2 = _interopRequireDefault(_MyStudyJsx);
 
 exports['default'] = _react2['default'].createClass({
     displayName: 'MyStudies',
 
-    getInitialState: function getInitialState() {
-        return this._getAll();
-    },
-
-    componentDidMount: function componentDidMount() {
-        this.setState(this._getAll());
-        MyStudiesStore.addChangeListener(this._onChange);
-    },
-
-    componentWillUnmount: function componentWillUnmount() {
-        MyStudiesStore.removeChangeListener(this._onChange);
-    },
-
     render: function render() {
-        var studies = [];
 
-        for (var key in this.state.studies) {
-            studies.push(this.state.studies[key]);
-        }
+        var studies = this.props.applicationState.studies.filter(function (study) {
+            return study.claimedByApplicant == true;
+        });
+
+        console.log('mystudies applicationstate studies');
         console.log(studies);
         return _react2['default'].createElement(
             'div',
@@ -35174,93 +35452,121 @@ exports['default'] = _react2['default'].createClass({
                 _reactBootstrap.ListGroup,
                 null,
                 studies.map(function (institution) {
-                    console.log('institution: ' + institution.toString());
-                    return _react2['default'].createElement(MyStudy, { institution: institution, key: institution.id });
+                    return _react2['default'].createElement(_MyStudyJsx2['default'], { institution: institution, key: institution.id });
                 })
             )
         );
-    },
-
-    _onChange: function _onChange() {
-        this.setState(this._getAll());
-    },
-
-    _getAll: function _getAll() {
-        return { studies: MyStudiesStore.getAll() };
     }
 });
 module.exports = exports['default'];
 
-},{"../stores/MyStudiesStore.js":373,"./MyStudy.jsx":364,"react":351,"react-bootstrap":74}],363:[function(require,module,exports){
+},{"../stores/AppStore.js":377,"./MyStudy.jsx":367,"react":351,"react-bootstrap":74}],366:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
-var BootStrap = require('react-bootstrap');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
 
-var StudiesSearch = require('./StudiesSearch.jsx');
-var MyStudies = require('./MyStudies.jsx');
-var SaveButton = require('./SaveButton.jsx');
-var MyStudiesStore = require('../stores/MyStudiesStore.js');
-var AppNavBar = require('./AppNavBar.jsx');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var institutions = require('../../../data/sources.js');
-console.log('institutions');
-console.log(institutions);
+var _react = require('react');
 
-function getMyStudiesState() {
-    return { studies: MyStudiesStore.getAll() };
-}
+var _react2 = _interopRequireDefault(_react);
 
-var MyStudiesPage = React.createClass({
+var _reactBootstrap = require('react-bootstrap');
+
+var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+
+var _StudiesSearchJsx = require('./StudiesSearch.jsx');
+
+var _StudiesSearchJsx2 = _interopRequireDefault(_StudiesSearchJsx);
+
+var _MyStudiesJsx = require('./MyStudies.jsx');
+
+var _MyStudiesJsx2 = _interopRequireDefault(_MyStudiesJsx);
+
+var _SaveButtonJsx = require('./SaveButton.jsx');
+
+var _SaveButtonJsx2 = _interopRequireDefault(_SaveButtonJsx);
+
+var _storesAppStoreJs = require('../stores/AppStore.js');
+
+var _storesAppStoreJs2 = _interopRequireDefault(_storesAppStoreJs);
+
+var _AppNavBarJsx = require('./AppNavBar.jsx');
+
+var _AppNavBarJsx2 = _interopRequireDefault(_AppNavBarJsx);
+
+var _storesAPIJs = require('../stores/API.js');
+
+var _storesAPIJs2 = _interopRequireDefault(_storesAPIJs);
+
+var _dataSourcesJs = require('../../../data/sources.js');
+
+var _dataSourcesJs2 = _interopRequireDefault(_dataSourcesJs);
+
+// console.log('institutions');
+// console.log(institutions)
+
+// function getMyStudiesState() {
+//     return {studies: MyStudiesStore.getAll()};
+// }
+
+var MyStudiesPage = _react2['default'].createClass({
     displayName: 'MyStudiesPage',
 
     getInitialState: function getInitialState() {
-        return getMyStudiesState();
+        var applicationState = _storesAPIJs2['default'].getApplicationState();
+        applicationState.studies = _dataSourcesJs2['default'];
+        return applicationState;
     },
 
     componentDidMount: function componentDidMount() {
-        MyStudiesStore.addChangeListener(this._onChange);
+        _storesAppStoreJs2['default'].addChangeListener(this._onChange);
     },
 
     componentWillUnmount: function componentWillUnmount() {
-        MyStudiesStore.removeChangeListener(this._onChange);
+        _storesAppStoreJs2['default'].removeChangeListener(this._onChange);
     },
 
     render: function render() {
-        return React.createElement(
+        console.log('MyStudiesPage state');
+        console.log(this.state);
+        return _react2['default'].createElement(
             'div',
             null,
-            React.createElement(AppNavBar, null),
-            React.createElement(
+            _react2['default'].createElement(_AppNavBarJsx2['default'], null),
+            _react2['default'].createElement(
                 'div',
                 { className: 'container-fluid' },
-                React.createElement(
+                _react2['default'].createElement(
                     'div',
                     { className: 'col-md-8 col-xs-12' },
-                    React.createElement(StudiesSearch, { institutions: institutions })
+                    _react2['default'].createElement(_StudiesSearchJsx2['default'], { institutions: _dataSourcesJs2['default'], applicationState: this.state.applicationState })
                 ),
-                React.createElement(
+                _react2['default'].createElement(
                     'div',
                     { className: 'col-md-4 col-xs-12' },
-                    React.createElement(MyStudies, null)
+                    _react2['default'].createElement(_MyStudiesJsx2['default'], { applicationState: this.state.applicationState })
                 ),
-                React.createElement(
+                _react2['default'].createElement(
                     'div',
                     { className: 'col-md-4 col-xs-12' },
-                    React.createElement(SaveButton, null)
+                    _react2['default'].createElement(_SaveButtonJsx2['default'], null)
                 )
             )
         );
     },
 
     _onChange: function _onChange() {
-        this.setState(getMyStudiesState());
+        this.setState(_storesAPIJs2['default'].getApplicationState());
     }
 });
 
-module.exports = MyStudiesPage;
+exports['default'] = MyStudiesPage;
+module.exports = exports['default'];
 
-},{"../../../data/sources.js":352,"../stores/MyStudiesStore.js":373,"./AppNavBar.jsx":357,"./MyStudies.jsx":362,"./SaveButton.jsx":367,"./StudiesSearch.jsx":368,"react":351,"react-bootstrap":74}],364:[function(require,module,exports){
+},{"../../../data/sources.js":353,"../stores/API.js":376,"../stores/AppStore.js":377,"./AppNavBar.jsx":359,"./MyStudies.jsx":365,"./SaveButton.jsx":370,"./StudiesSearch.jsx":371,"react":351,"react-bootstrap":74}],367:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -35291,6 +35597,8 @@ exports['default'] = _react2['default'].createClass({
         var Edit;
         var buttons;
         var study = this.props.institution;
+        console.log('my study study');
+        console.log(study);
 
         if (study.onARTS === "Y" || study.onArchives === "Y") {
             noDocs = _react2['default'].createElement(
@@ -35320,6 +35628,29 @@ exports['default'] = _react2['default'].createClass({
             buttons = _react2['default'].createElement(_EditStudiesModalJsx2['default'], { institution: study });
         }
 
+        if (study.hasOwnProperty('quals')) {
+            var quals = study.quals.map(function (a) {
+                return _react2['default'].createElement(
+                    _reactBootstrap.ListGroupItem,
+                    {
+                        bsSize: 'xsmall'
+                    },
+                    _react2['default'].createElement(
+                        'small',
+                        null,
+                        a.name + ' ' + a.start + '-' + a.end
+                    )
+                );
+            });
+            var qualList = _react2['default'].createElement(
+                _reactBootstrap.ListGroup,
+                null,
+                quals
+            );
+        } else {
+            var qualList = _react2['default'].createElement('span', null);
+        }
+
         return _react2['default'].createElement(
             _reactBootstrap.ListGroupItem,
             { header: study.name, key: study.id },
@@ -35337,6 +35668,7 @@ exports['default'] = _react2['default'].createClass({
                     null,
                     study.country
                 ),
+                qualList,
                 buttons
             )
         );
@@ -35353,7 +35685,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../actions/ViewActions.js":353,"./EditStudiesModal.jsx":358,"react":351,"react-bootstrap":74}],365:[function(require,module,exports){
+},{"../actions/ViewActions.js":354,"./EditStudiesModal.jsx":360,"react":351,"react-bootstrap":74}],368:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -35451,37 +35783,67 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../actions/ViewActions.js":353,"./AddButton.jsx":355,"./AddStudiesModal.jsx":356,"react":351,"react-bootstrap":74}],366:[function(require,module,exports){
+},{"../actions/ViewActions.js":354,"./AddButton.jsx":356,"./AddStudiesModal.jsx":357,"react":351,"react-bootstrap":74}],369:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
-var Result = require('./Result.jsx');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
 
-var Results = React.createClass({
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _ResultJsx = require('./Result.jsx');
+
+var _ResultJsx2 = _interopRequireDefault(_ResultJsx);
+
+var _storesAPIJs = require('../stores/API.js');
+
+var _storesAPIJs2 = _interopRequireDefault(_storesAPIJs);
+
+exports['default'] = _react2['default'].createClass({
     displayName: 'Results',
 
     render: function render() {
-        var matches = [];
+        var _this = this;
 
         if (this.props.filterText.length > 0) {
+            var applicationState = this.props.applicationState;
+            var studies = applicationState.studies;
+            var institutions = studies.filter(function (institution) {
+                return institution.name.toLowerCase().indexOf(_this.props.filterText) !== -1;
+            }).filter(function (institution) {
+                return !institution.claimedByApplicant;
+            }).map(function (institution) {
+                return _react2['default'].createElement(_ResultJsx2['default'], { institution: institution, key: institution.id });
+            });
 
-            this.props.institutions.forEach((function (institution) {
-                if (institution.name.toLowerCase().indexOf(this.props.filterText) !== -1) {
-                    matches.push(React.createElement(Result, { institution: institution, key: institution.id }));
-                }
-            }).bind(this));
+            /* Handle short lists */
+            if (institutions.length < 3) {
+                institutions.push(_react2['default'].createElement(
+                    _reactBootstrap.ListGroupItem,
+                    { key: 999 },
+                    'My institution ain\'t here... add button to come'
+                ));
+            }
+            return _react2['default'].createElement(
+                _reactBootstrap.ListGroup,
+                null,
+                institutions
+            );
+        } else {
+            return _react2['default'].createElement(_reactBootstrap.ListGroup, null);
         }
-        return React.createElement(
-            'div',
-            { className: 'list-group' },
-            matches
-        );
     }
 });
+module.exports = exports['default'];
 
-module.exports = Results;
-
-},{"./Result.jsx":365,"react":351}],367:[function(require,module,exports){
+},{"../stores/API.js":376,"./Result.jsx":368,"react":351,"react-bootstrap":74}],370:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -35513,7 +35875,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"react":351,"react-bootstrap":74}],368:[function(require,module,exports){
+},{"react":351,"react-bootstrap":74}],371:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -35545,7 +35907,7 @@ var StudiesSearch = React.createClass({
                 onUserInput: this.handleUserInput
             }),
             React.createElement(Results, {
-                institutions: this.props.institutions,
+                applicationState: this.props.applicationState,
                 filterText: this.state.filterText
             })
         );
@@ -35554,7 +35916,7 @@ var StudiesSearch = React.createClass({
 
 module.exports = StudiesSearch;
 
-},{"./Results.jsx":366,"./StudiesSearchBar.jsx":369,"react":351}],369:[function(require,module,exports){
+},{"./Results.jsx":369,"./StudiesSearchBar.jsx":372,"react":351}],372:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -35583,7 +35945,84 @@ var StudiesSearchBar = React.createClass({
 
 module.exports = StudiesSearchBar;
 
-},{"react":351}],370:[function(require,module,exports){
+},{"react":351}],373:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+exports['default'] = _react2['default'].createClass({
+    displayName: 'YearInput',
+
+    getInitialState: function getInitialState() {
+        return {
+            value: null
+        };
+    },
+
+    validateYear: function validateYear(year) {
+        if (year) {
+            if (year > 1900 && year < 2015) {
+                return "success";
+            } else {
+                return "error";
+            }
+        }
+    },
+
+    handleChange: function handleChange() {
+        this.setState({
+            value: this.refs[this.props.refName].getValue()
+        });
+    },
+
+    // componentDidUpdate() {
+    //     this._myValue = React.findDOMNode(this.refs[this.props.ref]).value
+    // },
+
+    render: function render() {
+        return _react2['default'].createElement(_reactBootstrap.Input, {
+            hasFeedback: true,
+            ref: this.props.refName,
+            type: 'text',
+            label: this.props.label,
+            onChange: this.handleChange,
+            value: this.state.value,
+            bsStyle: this.validateYear(this.state.value)
+
+        });
+    }
+});
+
+/*
+
+onChange={this.handleChange()}
+
+React.findDOMNode(this.refs[this.props.ref]).value
+onChange={this.handleChange()}
+value={this.state.value}
+                placeholder={this.props.placeholder}
+bsStyle = {this.validateYear(this.state.value)}
+type="password"
+                label = {this.props.label}
+                bsStyle = {this.validateYear(this.state.value)}
+                ref = 'input'
+                value= {this.state.value}
+value= {this.state.value}
+
+*/
+module.exports = exports['default'];
+
+},{"react":351,"react-bootstrap":74}],374:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -35592,13 +36031,22 @@ module.exports = {
     'REMOVE_STUDY': 'remove_study'
 };
 
-},{}],371:[function(require,module,exports){
+},{}],375:[function(require,module,exports){
 'use strict';
 
-var assign = require('react/lib/Object.assign');
-var Dispatcher = require('flux').Dispatcher;
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
 
-var AppDispatcher = assign(new Dispatcher(), {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _reactLibObjectAssign = require('react/lib/Object.assign');
+
+var _reactLibObjectAssign2 = _interopRequireDefault(_reactLibObjectAssign);
+
+var _flux = require('flux');
+
+var AppDispatcher = (0, _reactLibObjectAssign2['default'])(new _flux.Dispatcher(), {
     /**
     * @param {object} action 
     * 
@@ -35612,15 +36060,26 @@ var AppDispatcher = assign(new Dispatcher(), {
     }
 });
 
-module.exports = AppDispatcher;
+exports['default'] = AppDispatcher;
+module.exports = exports['default'];
 
-},{"flux":3,"react/lib/Object.assign":222}],372:[function(require,module,exports){
-"use strict";
+},{"flux":3,"react/lib/Object.assign":222}],376:[function(require,module,exports){
+'use strict';
 
-module.exports = {
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _dataSourcesJs = require('../../../data/sources.js');
+
+var _dataSourcesJs2 = _interopRequireDefault(_dataSourcesJs);
+
+exports['default'] = {
     arrayObjectIndexOf: function arrayObjectIndexOf(myArray, searchTerm, property) {
         for (var i = 0, len = myArray.length; i < len; i++) {
-            if (myArray[i][property].toString() == searchTerm.toString()) {
+            if (myArray[i][property] /*.toString()*/ == searchTerm.toString()) {
                 return i;
             };
         }
@@ -35631,85 +36090,144 @@ module.exports = {
         return JSON.parse(window.localStorage.getItem(key));
     },
 
-    updateStorage: function updateStorage(key, value) {
+    getApplicationState: function getApplicationState() {
+        return this.getStorage('applicationState') || { 'applicationState': { 'studies': _dataSourcesJs2['default'] } };
+    },
+
+    getStudies: function getStudies() {
+        var appState = this.getApplicationState();
+        console.log('appState');
+        console.log(appState);
+        var studies = appState.applicationState.studies;
+        studies.filter(function (a) {
+            return a.claimedByApplicant == true;
+        });
+    },
+
+    setStudies: function setStudies(value) {
+        var appState = this.getApplicationState();
+        appState.applicationState.studies = value;
+        window.localStorage.setItem('applicationState', JSON.stringify(appState));
+    },
+
+    setStorage: function setStorage(key, value) {
         if (typeof value != "string") {
             value = JSON.stringify(value);
         }
         window.localStorage.setItem(key, value);
     }
 };
+module.exports = exports['default'];
 
-},{}],373:[function(require,module,exports){
+},{"../../../data/sources.js":353}],377:[function(require,module,exports){
 'use strict';
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var ViewConstants = require('../constants/ViewConstants');
-var assign = require('react/lib/Object.assign');
-var API = require('./API.js');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _dispatcherAppDispatcher = require('../dispatcher/AppDispatcher');
+
+var _dispatcherAppDispatcher2 = _interopRequireDefault(_dispatcherAppDispatcher);
+
+var _events = require('events');
+
+var _constantsViewConstants = require('../constants/ViewConstants');
+
+var _constantsViewConstants2 = _interopRequireDefault(_constantsViewConstants);
+
+var _reactLibObjectAssign = require('react/lib/Object.assign');
+
+var _reactLibObjectAssign2 = _interopRequireDefault(_reactLibObjectAssign);
+
+var _APIJs = require('./API.js');
+
+var _APIJs2 = _interopRequireDefault(_APIJs);
 
 var CHANGE_EVENT = 'change';
 
-var _myStudies = API.getStorage('studies') || [];
+var _ApplicationState = _APIJs2['default'].getApplicationState();
+var _myStudies = _APIJs2['default'].getStudies();
 
-function editStudy(institution) {
-    this.setState({ showModal: true });
-}
-
-function addStudy(institution) {
-    var index = API.arrayObjectIndexOf(_myStudies, institution.id, 'id');
-    if (index == -1) {
-        _myStudies.push(institution);
-        API.updateStorage('studies', _myStudies);
-    }
-}
-
-function removeStudy(institution) {
-    var index = API.arrayObjectIndexOf(_myStudies, institution.id, 'id');
-    if (index != -1) {
-        _myStudies.splice([index], 1);
-        API.updateStorage('studies', _myStudies);
-    }
-}
-
-var MyStudiesStore = assign({}, EventEmitter.prototype, {
-    getAll: function getAll() {
-        return _myStudies;
+var AppStore = (0, _reactLibObjectAssign2['default'])({}, _events.EventEmitter.prototype, {
+    getApplicationState: function getApplicationState() {
+        return _ApplicationState;
     },
+
+    logIn: function logIn(user) {
+        console.log('User logs in, implement handling');
+    },
+
     emitChange: function emitChange() {
         this.emit(CHANGE_EVENT);
     },
+
     addChangeListener: function addChangeListener(callback) {
         this.on(CHANGE_EVENT, callback);
     },
+
     removeChangeListener: function removeChangeListener(callback) {
         this.removeListener(CHANGE_EVENT, callback);
     },
-    dispatcherIndex: AppDispatcher.register(function (payload) {
+
+    addStudy: function addStudy(institution) {
+        var applicationState = _APIJs2['default'].getApplicationState();
+        var studies = applicationState['applicationState']['studies'];
+        var index = _APIJs2['default'].arrayObjectIndexOf(studies, institution.id, 'id');
+        studies[index]['claimedByApplicant'] = true;
+        if (institution.hasOwnProperty('quals')) {
+            console.log('HAS QUALS');
+            studies[index]['quals'] = institution.quals;
+        }
+        _APIJs2['default'].setStudies(studies);
+    },
+
+    editStudy: function editStudy(institution) {
+        this.setState({ showModal: true });
+    },
+
+    removeStudy: function removeStudy(institution) {
+        var applicationState = _APIJs2['default'].getApplicationState();
+        var studies = applicationState['applicationState']['studies'];
+        var index = _APIJs2['default'].arrayObjectIndexOf(studies, institution.id, 'id');
+        if (index != -1) {
+            studies[index]['claimedByApplicant'] = false;
+            _APIJs2['default'].setStudies(studies);
+        }
+    },
+
+    dispatcherIndex: _dispatcherAppDispatcher2['default'].register(function (payload) {
         var action = payload.action;
         //console.log(action);
         var text;
 
         switch (action.actionType) {
-            case ViewConstants.ADD_STUDY:
-                addStudy(action.institution);
-                MyStudiesStore.emitChange();
+            case _constantsViewConstants2['default'].LOG_IN:
+                AppStore.logIn(action.user); // function required
+                AppStore.emitChange();
+
+            case _constantsViewConstants2['default'].ADD_STUDY:
+                AppStore.addStudy(action.institution);
+                AppStore.emitChange();
                 break;
 
-            case ViewConstants.EDIT_STUDY:
-                edit(action.institution);
-                MyStudiesStore.emitChange();
+            case _constantsViewConstants2['default'].EDIT_STUDY:
+                AppStore.edit(action.institution);
+                AppStore.emitChange();
                 break;
 
-            case ViewConstants.REMOVE_STUDY:
-                removeStudy(action.institution);
-                MyStudiesStore.emitChange();
+            case _constantsViewConstants2['default'].REMOVE_STUDY:
+                AppStore.removeStudy(action.institution);
+                AppStore.emitChange();
                 break;
         }
         return true;
     })
 });
 
-module.exports = MyStudiesStore;
+exports['default'] = AppStore;
+module.exports = exports['default'];
 
-},{"../constants/ViewConstants":370,"../dispatcher/AppDispatcher":371,"./API.js":372,"events":1,"react/lib/Object.assign":222}]},{},[354]);
+},{"../constants/ViewConstants":374,"../dispatcher/AppDispatcher":375,"./API.js":376,"events":1,"react/lib/Object.assign":222}]},{},[355]);

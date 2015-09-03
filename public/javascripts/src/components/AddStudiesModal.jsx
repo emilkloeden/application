@@ -1,6 +1,7 @@
 import React from 'react';
-import { Modal, Button, ButtonToolbar, Input } from 'react-bootstrap';
+import { Modal, Button, ButtonToolbar, Input, ButtonInput } from 'react-bootstrap';
 import ViewActions from '../actions/ViewActions.js';
+import AddStudiesModalBody from './AddStudiesModalBody.jsx'
 
 
 export default React.createClass({
@@ -24,45 +25,53 @@ export default React.createClass({
         this.setState({ 'institutionQuals': institutionQuals })
     },
 
-    handleLevel() {
-        console.log('handle level');
-    },
+    
 
     getInstitutionQuals() {
         return this.state.institutionQuals || [];
     },
 
     addQualifications() {
-        ViewActions.addStudy(this.props.institution);
+        let institution = this.props.institution;
+        let quals = JSON.parse(window.localStorage.getItem('tempStorage'));
+        console.log('quals gotten')
+        console.log(quals)
+        console.log('removing temporary storage...')
+        window.localStorage.removeItem('tempStorage');
+        institution['quals'] = quals;
+        console.log('add quals institution')
+        console.log(institution)
+        ViewActions.addStudy(institution);
         this.close();
     },
 
     render() {
+        console.log('modal initial props')
+        console.log(this.props)
         return (
             <div>
                 <ButtonToolbar>
                     <Button bsSize='xsmall' onClick={this.open}>Add</Button>
                 </ButtonToolbar>
-                <Modal show={this.state.showModal} onHide={this.close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add qualifications... click Add qualification(s) when done</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <h2>What level did you study?</h2>
-                        <Input type='select' ref="level" onChange={this.handleLevel}>
-                            <option value="a">a</option>
-                            <option value="b">b</option>
-                        </Input>
-                        <ButtonToolbar>
-                            <Button onClick={this.addSingleQual}>Add</Button>
-                        </ButtonToolbar>
-                        <p>Dummy text for now...</p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.addQualifications}>Add qualification(s)...</Button>
-                    </Modal.Footer>
+                <Modal show={this.state.showModal} onHide={this.close} institution={this.props.institution}>
+                    <form className="form-group">
+                        <Modal.Header closeButton>
+                            <Modal.Title>Add qualifications... click Add qualification(s) when done</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body institution={this.props.institution}>
+                            <AddStudiesModalBody institution={this.props.institution} />
+                        </Modal.Body>
+                       
+                        <Modal.Footer>
+                            <Button bsStyle="primary" onClick={this.addQualifications}>DONE</Button>
+                        </Modal.Footer>
+                    </form>
                 </Modal>
             </div>
         );
     }
 });
+
+ //
+//<Modal.Body />
+

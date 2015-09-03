@@ -13,6 +13,8 @@ var MyApplicationsPage = require('./components/MyApplicationsPage.jsx');
 var AppNavBar = require('./components/AppNavBar.jsx');
 var MyStudiesPage = require('./components/MyStudiesPage.jsx');
 
+import API from './stores/API.js'
+
 
 
 var routes = (
@@ -29,7 +31,13 @@ var routes = (
 
 
 var App = React.createClass({
-    render: function() {
+    getInitialState() {
+        API.getApplicationState();
+    },
+    componentWillMount() {
+        API.getApplicationState();
+    },
+    render() {
         return (<RouteHandler />)
     }
 });

@@ -22,7 +22,7 @@ var StudiesSearch = React.createClass({
                 />
         
                 <Results
-                    institutions={this.props.institutions} 
+                    applicationState={this.props.applicationState}
                     filterText={this.state.filterText}
                 />
             </div>

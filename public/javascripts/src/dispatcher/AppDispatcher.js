@@ -1,7 +1,7 @@
-var assign = require('react/lib/Object.assign');
-var Dispatcher = require('flux').Dispatcher;
+import assign from 'react/lib/Object.assign';
+import { Dispatcher } from 'flux';
 
-var AppDispatcher = assign(new Dispatcher(), {
+let AppDispatcher = assign(new Dispatcher(), {
     /**
     * @param {object} action 
     * 
@@ -15,4 +15,4 @@ var AppDispatcher = assign(new Dispatcher(), {
     }
 });
 
-module.exports = AppDispatcher;
+export default AppDispatcher;
